@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Avee Player Latest Template</string>
+    <string name="downloaded_templates">Downloaded Templates</string>
+    <string name="title_activity_navigation_main_activty">Navigation_MainActivty</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">About Us</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Downloaded</string>
+    <string name="menu_slideshow">Privacy Policy</string>
+</resources>

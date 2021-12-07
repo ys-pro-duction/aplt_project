@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/purple_700"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <!--    <include-->
+    <!--        layout="@layout/activity_main"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/background"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        app:srcCompat="@drawable/background" />-->
+
+
+    <ImageView
+        android:id="@+id/cercel1"
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:src="@drawable/cercle"
+        app:layout_constraintStart_toEndOf="@id/guideline1.0"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cercel2"
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:src="@drawable/cercle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline1.0" />
+
+    <ImageView
+        android:id="@+id/cercel3"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/cercle"
+        app:layout_constraintBottom_toTopOf="@id/guideline0.1"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/cercel4"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/cercle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline0.2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:foregroundGravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+
+        android:id="@+id/fragmentHomeId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clickable="true"-->
+<!--        android:contentDescription="@string/downloaded_templates"-->
+<!--        android:enabled="true"-->
+<!--        android:overScrollMode="always"-->
+<!--        android:src="@android:drawable/stat_sys_download_done"-->
+<!--        android:transformPivotX="2dp"-->
+<!--        android:transformPivotY="2dp"-->
+<!--        app:backgroundTint="#8BF3FF"-->
+<!--        app:elevation="8dp"-->
+<!--        app:ensureMinTouchTargetSize="true"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/guideline2"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/guideline4"-->
+<!--        app:rippleColor="#FFFFFF"-->
+
+<!--        tools:ignore="SpeakableTextPresentCheck" />-->
+    <!--    app:srcCompat="@android:drawable/stat_sys_download_done"-->
+
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintGuide_percent="0.98" />-->
+
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintGuide_percent="0.95" />-->
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline0.1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline0.2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

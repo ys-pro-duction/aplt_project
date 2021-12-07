@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "573198566715",
+    "firebase_url": "https://avee-player-latest-templ-59481-default-rtdb.firebaseio.com",
+    "project_id": "avee-player-latest-templ-59481",
+    "storage_bucket": "avee-player-latest-templ-59481.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573198566715:android:f8922a7347162cc245631e",
+        "android_client_info": {
+          "package_name": "com.ys_production.aveeplayerlatesttemplate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573198566715-1a1tlblg4f7gdj13lknfgoj036qktun2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVflmNpXMeScS941Ggd7-oyexpVVwvkDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "573198566715-1a1tlblg4f7gdj13lknfgoj036qktun2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
