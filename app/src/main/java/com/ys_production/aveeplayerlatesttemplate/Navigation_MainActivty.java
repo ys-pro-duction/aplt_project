@@ -58,23 +58,25 @@ public class Navigation_MainActivty extends AppCompatActivity {
         binding = ActivityNavigationMainActivtyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(f==0){
-                    goTodownloads(fab);
-                    loadAds();
-                    showAd();
-                }
-                else {
-                    goTohome(fab);
-                    loadAds();
-                    showAd();
-                }
-                Toast.makeText(Navigation_MainActivty.this, "try ad", Toast.LENGTH_SHORT).show();
-            }
-        });
+
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onFabclick();
+//                if(f==0){
+//                    goTodownloads(fab);
+//                    loadAds();
+//                    showAd();
+//                }
+//                else {
+//                    goTohome(fab);
+//                    loadAds();
+//                    showAd();
+//                }
+//                Toast.makeText(Navigation_MainActivty.this, "try ad", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 //        =========================AD load============================
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -184,76 +186,92 @@ public class Navigation_MainActivty extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public void loadAds(){
-        AdRequest adRequest = new AdRequest.Builder().build();
-        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712"
-                , adRequest, new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        super.onAdLoaded(interstitialAd);
-                        mInterstitialAd = interstitialAd;
-                        Log.i("Ad1", "AdLoaded");
-                    }
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        super.onAdFailedToLoad(loadAdError);
-                        Log.i("error load Ad", loadAdError.getMessage());
-                        mInterstitialAd = null;
-                    }
-                });
-    }
-
-    public void showAd(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mInterstitialAd != null) {
-                    mInterstitialAd.show(Navigation_MainActivty.this);
-                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                        @Override
-                        public void onAdDismissedFullScreenContent() {
-                            // Called when fullscreen content is dismissed.
-                            Toast.makeText(Navigation_MainActivty.this, "ad closed", Toast.LENGTH_LONG);
-                            loadAds();
-                        }
-                    });
-                } else {
-                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
-                }
-            }
-        },1000);
-    }
-
-    public void goTohome(FloatingActionButton fab){
-        HomeFragment homeFragment = new HomeFragment();
-        GalleryFragment galleryFragment = new GalleryFragment();
-
-//        FragmentManager fm = getFragmentManager();
-//        android.app.FragmentManager fm = getFragmentManager();
-//        fm.beginTransaction()
-//                .replace(R.id.fragmentHomeId,homeFragment)
-//                .commit();
+//    public void loadAds(){
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        InterstitialAd.load(this, "ca-app-pub-3940256099942544/1033173712"
+//                , adRequest, new InterstitialAdLoadCallback() {
+//                    @Override
+//                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+//                        super.onAdLoaded(interstitialAd);
+//                        mInterstitialAd = interstitialAd;
+//                        Log.i("Ad1", "AdLoaded");
+//                    }
+//                    @Override
+//                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+//                        super.onAdFailedToLoad(loadAdError);
+//                        Log.i("error load Ad", loadAdError.getMessage());
+//                        mInterstitialAd = null;
+//                    }
+//                });
+//    }
+//
+//    public void showAd(){
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (mInterstitialAd != null) {
+//                    mInterstitialAd.show(Navigation_MainActivty.this);
+//                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+//                        @Override
+//                        public void onAdDismissedFullScreenContent() {
+//                            // Called when fullscreen content is dismissed.
+//                            Toast.makeText(Navigation_MainActivty.this, "ad closed", Toast.LENGTH_LONG);
+//                            loadAds();
+//                        }
+//                    });
+//                } else {
+//                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
+//                }
+//            }
+//        },1000);
+//    }
+//
+//    public void goTohome(){
+//        HomeFragment homeFragment = new HomeFragment();
+//        GalleryFragment galleryFragment = new GalleryFragment();
+//
+////        FragmentManager fm = getFragmentManager();
+////        android.app.FragmentManager fm = getFragmentManager();
+////        fm.beginTransaction()
+////                .replace(R.id.fragmentHomeId,homeFragment)
+////                .commit();
+////        fab.setImageResource(android.R.drawable.stat_sys_download_done);
+////        f--;
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+////        fragmentManager.beginTransaction().replace(R.id.contaner,homeFragment).commit();
+//        fragmentManager.beginTransaction().replace(R.id.fragmentHomeId,homeFragment).commit();
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setImageResource(R.drawable.ic_baseline_home_24);
+//        f++;
+//    }
+//    public void goTodownloads(){
+//        GalleryFragment galleryFragment = new GalleryFragment();
+//        HomeFragment homeFragment = new HomeFragment();
+//
+//
+////        FragmentManager fm = getFragmentManager();
+////        fm.beginTransaction()
+////                .replace(R.id.fragmentHomeId,galleryFragment)
+////                .commit();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+////        fragmentManager.beginTransaction().replace(R.id.contaner,galleryFragment).commit();
+//        fragmentManager.beginTransaction().replace(R.id.fragmentHomeId,galleryFragment).commit();
+//        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setImageResource(android.R.drawable.stat_sys_download_done);
 //        f--;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.contaner,homeFragment).commit();
-        fragmentManager.beginTransaction().replace(R.id.fragmentHomeId,homeFragment).commit();
-        fab.setImageResource(R.drawable.ic_baseline_home_24);
-        f++;
-    }
-    public void goTodownloads(FloatingActionButton fab){
-        GalleryFragment galleryFragment = new GalleryFragment();
-        HomeFragment homeFragment = new HomeFragment();
-
-
-//        FragmentManager fm = getFragmentManager();
-//        fm.beginTransaction()
-//                .replace(R.id.fragmentHomeId,galleryFragment)
-//                .commit();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.contaner,galleryFragment).commit();
-        fragmentManager.beginTransaction().replace(R.id.fragmentHomeId,galleryFragment).commit();
-        fab.setImageResource(android.R.drawable.stat_sys_download_done);
-        f--;
-    }
+//    }
+//    public void onFabclick(){
+//        if(f==0){
+//            goTodownloads();
+//            loadAds();
+//            showAd();
+//        }
+//        else {
+//            goTohome();
+//            loadAds();
+//            showAd();
+//        }
+//        Toast.makeText(Navigation_MainActivty.this, "try ad", Toast.LENGTH_SHORT).show();
+//
+//    }
 }

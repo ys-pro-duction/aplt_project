@@ -2,6 +2,8 @@ package com.ys_production.aveeplayerlatesttemplate.ui.home;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ys_production.aveeplayerlatesttemplate.MyAdepter;
+import com.ys_production.aveeplayerlatesttemplate.Navigation_MainActivty;
 import com.ys_production.aveeplayerlatesttemplate.R;
 import com.ys_production.aveeplayerlatesttemplate.Template_data;
 import com.ys_production.aveeplayerlatesttemplate.databinding.FragmentHomeBinding;
@@ -47,13 +57,15 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
 //        ==================AdMob ad======================================================
-//        MobileAds.initialize(root.getContext(), new OnInitializationCompleteListener() {
-//            @Override
-//            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
-//                Toast.makeText(root.getContext(), "Initialize DoNe", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+        MobileAds.initialize(root.getContext(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+                Toast.makeText(root.getContext(), "Initialize DoNe", Toast.LENGTH_SHORT).show();
+            }
+        });
 //        AdRequest adRequest = new AdRequest.Builder().build();
 //        InterstitialAd.load(root.getContext(), "ca-app-pub-3940256099942544/1033173712"
 //                , adRequest, new InterstitialAdLoadCallback() {
@@ -99,6 +111,7 @@ public class HomeFragment extends Fragment {
 
 
         //================= Recycler View Setup ============================================================
+
         recyclerView = root.findViewById(R.id.recyclerView);
         databaseReference = FirebaseDatabase.getInstance().getReference("Items");
         recyclerView.setHasFixedSize(true);
@@ -139,20 +152,12 @@ public class HomeFragment extends Fragment {
 
 //================ Open Fab ========================================================================
         FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setVisibility(View.VISIBLE
-        );
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (fabp == 0){
-//                    goTodownloads(fab);
-//                }
-//                else {
-//                    goTohome(fab);
-//                }
-//            }
-//        });
-
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFabclick(fab);
+            }
+        });
 
         return root;
     }
@@ -181,5 +186,61 @@ public class HomeFragment extends Fragment {
                 .commit();
         fab.setImageResource(R.drawable.ic_baseline_home_24);
         fabp++;
+    }
+//    ==================ad=============================
+public void loadAds(){
+    AdRequest adRequest = new AdRequest.Builder().build();
+    InterstitialAd.load(getContext(), "ca-app-pub-3940256099942544/1033173712"
+            , adRequest, new InterstitialAdLoadCallback() {
+                @Override
+                public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                    super.onAdLoaded(interstitialAd);
+                    mInterstitialAd = interstitialAd;
+                    Log.i("Ad1", "AdLoaded");
+                }
+                @Override
+                public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                    super.onAdFailedToLoad(loadAdError);
+                    Log.i("error load Ad", loadAdError.getMessage());
+                    mInterstitialAd = null;
+                }
+            });
+
+
+}
+
+    public void showAd(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mInterstitialAd != null) {
+                    mInterstitialAd.show(getActivity());
+                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                        @Override
+                        public void onAdDismissedFullScreenContent() {
+                            // Called when fullscreen content is dismissed.
+                            Toast.makeText(getContext(), "ad closed", Toast.LENGTH_LONG);
+                            loadAds();
+                        }
+                    });
+                } else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
+                }
+            }
+        },1000);
+    }
+    public void onFabclick(FloatingActionButton fab){
+        if(fabp==0){
+            goTodownloads(fab);
+            loadAds();
+            showAd();
+        }
+        else {
+            goTohome(fab);
+            loadAds();
+            showAd();
+        }
+        Toast.makeText(getContext(), "try ad", Toast.LENGTH_SHORT).show();
+
     }
 }

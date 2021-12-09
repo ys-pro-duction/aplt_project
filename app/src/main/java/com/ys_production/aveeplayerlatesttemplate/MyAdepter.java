@@ -1,5 +1,6 @@
 package com.ys_production.aveeplayerlatesttemplate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,11 +15,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.util.ArrayList;
 
 public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
     Context context;
+    private RewardedAd mRewardedAd;
+
 
     ArrayList<Template_data> list;
 
@@ -42,9 +52,11 @@ public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
         Template_data item = list.get(position);
         holder.Item_name.setText(item.getItem_name());
 
+
         holder.Durl.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 //                Toast.makeText(context, "Download starting \n"+item.getItem_name(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(context,MainActivity2.class);
                 intent.putExtra("ImageUrl",item.getImgurl());
@@ -60,6 +72,8 @@ public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
                 .with(context)
                 .load(item.getImgurl())
                 .into(holder.ImageUrl);
+
+
 
     }
 
@@ -86,4 +100,6 @@ public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
 
         }
     }
+
+
 }

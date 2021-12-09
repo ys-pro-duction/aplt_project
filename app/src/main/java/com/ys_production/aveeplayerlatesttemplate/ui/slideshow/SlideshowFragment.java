@@ -38,8 +38,9 @@ public class SlideshowFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
-        FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
+
+//        FloatingActionButton fab = root.findViewById(R.id.fab);
+//        fab.setVisibility(View.INVISIBLE);
 
         webView = root.findViewById(R.id.privacyWeb);
         webView.getSettings().setJavaScriptEnabled(true);

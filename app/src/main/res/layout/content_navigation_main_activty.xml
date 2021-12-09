@@ -7,25 +7,25 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_navigation_main_activty">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:contentDescription="@string/downloaded_templates"
-        android:enabled="true"
-        android:overScrollMode="always"
-        android:src="@android:drawable/stat_sys_download_done"
-        android:transformPivotX="2dp"
-        android:transformPivotY="2dp"
-        app:backgroundTint="#8BF3FF"
-        app:elevation="8dp"
-        app:ensureMinTouchTargetSize="true"
-        app:layout_constraintBottom_toTopOf="@id/guideline2"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:rippleColor="#FFFFFF"
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clickable="true"-->
+<!--        android:contentDescription="@string/downloaded_templates"-->
+<!--        android:enabled="true"-->
+<!--        android:overScrollMode="always"-->
+<!--        android:src="@android:drawable/stat_sys_download_done"-->
+<!--        android:transformPivotX="2dp"-->
+<!--        android:transformPivotY="2dp"-->
+<!--        app:backgroundTint="#8BF3FF"-->
+<!--        app:elevation="8dp"-->
+<!--        app:ensureMinTouchTargetSize="true"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/guideline2"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/guideline4"-->
+<!--        app:rippleColor="#FFFFFF"-->
 
-        tools:ignore="SpeakableTextPresentCheck" />
+<!--        tools:ignore="SpeakableTextPresentCheck" />-->
 
     <fragment
         android:id="@+id/nav_host_fragment_content_navigation_main_activty"
@@ -42,17 +42,17 @@
         android:layout_height="match_parent"
         android:id="@+id/contaner"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.98" />
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintGuide_percent="0.98" />-->
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintGuide_percent="0.95" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

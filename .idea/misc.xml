@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_thumb_up_24.xml" value="0.2203125" />
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout-land/item_layout.xml" value="0.22" />
+        <entry key="app/src/main/res/layout-notlong/fragment_home.xml" value="0.18" />
         <entry key="app/src/main/res/layout-small/activity_main2.xml" value="1.0" />
         <entry key="app/src/main/res/layout-small/fragment_home.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
