@@ -3,6 +3,8 @@ package com.ys_production.aveeplayerlatesttemplate;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +27,8 @@ import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
     Context context;
@@ -51,6 +56,11 @@ public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
 
         Template_data item = list.get(position);
         holder.Item_name.setText(item.getItem_name());
+
+        String ad = item.getAdSwitch();
+        SharedPreferences sp = context.getSharedPreferences("adswitch",Context.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putString("ADswitch",ad).apply();
 
 
         holder.Durl.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
@@ -97,6 +107,8 @@ public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
             ImageUrl = itemView.findViewById(R.id.imageView1);
             Durl = itemView.findViewById(R.id.button1);
             Item_name = itemView.findViewById(R.id.textView1);
+
+
 
         }
     }

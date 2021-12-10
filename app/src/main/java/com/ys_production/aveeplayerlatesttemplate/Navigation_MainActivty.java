@@ -50,6 +50,8 @@ public class Navigation_MainActivty extends AppCompatActivity {
     private InterstitialAd mInterstitialAd;
     public static int a = 0;
     public int f = 0;
+    public static int backint = 1;
+    public FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,6 +270,24 @@ public class Navigation_MainActivty extends AppCompatActivity {
 //        }
 //        else {
 //            goTohome();
+
+    @Override
+    public void onBackPressed() {
+        if(backint == 2){
+            super.onBackPressed();
+        }else {
+            Toast.makeText(Navigation_MainActivty.this, "press again to exit", Toast.LENGTH_SHORT).show();
+            backint++;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    backint--;
+                }
+            },1500);
+        }
+    }
+
+
 //            loadAds();
 //            showAd();
 //        }

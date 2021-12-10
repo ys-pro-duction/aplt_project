@@ -11,9 +11,7 @@
     app:cardBackgroundColor="#B3000A3D"
     app:cardCornerRadius="10dp"
     app:cardElevation="0dp"
-    app:cardMaxElevation="10dp"
-    app:layout_constraintHeight_max="wrap"
-    app:layout_constraintWidth_max="wrap">
+    app:cardMaxElevation="10dp">
 
     <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
     <!--        android:layout_width="match_parent"-->
@@ -118,13 +116,14 @@
             android:id="@+id/imageView1"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:scaleType="centerCrop"
             app:layout_constraintDimensionRatio="2:1"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="@id/guideline4"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/textView1"
             app:srcCompat="@android:drawable/progress_indeterminate_horizontal" />
+
 
 
         <Button

@@ -1,6 +1,8 @@
 package com.ys_production.aveeplayerlatesttemplate.ui.home;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -46,6 +48,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Template_data> list;
     static int fabp = 0;
     private InterstitialAd mInterstitialAd;
+
 
 
 
@@ -162,6 +165,7 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -230,17 +234,26 @@ public void loadAds(){
         },1000);
     }
     public void onFabclick(FloatingActionButton fab){
+        SharedPreferences sp = getContext().getSharedPreferences("adswitch", Context.MODE_PRIVATE);
+        String ads = String.valueOf(sp.getString("ADswitch","on"));
         if(fabp==0){
             goTodownloads(fab);
-            loadAds();
-            showAd();
+            Toast.makeText(getContext(), "ads "+ads, Toast.LENGTH_SHORT).show();
+            if (ads.equals("on")){
+                loadAds();
+                showAd();
+                Toast.makeText(getContext(), "try ad", Toast.LENGTH_SHORT).show();
+            }
         }
         else {
             goTohome(fab);
-            loadAds();
-            showAd();
+            if (ads.equals("on")){
+                loadAds();
+                showAd();
+                Toast.makeText(getContext(), "try ad", Toast.LENGTH_SHORT).show();
+            }
         }
-        Toast.makeText(getContext(), "try ad", Toast.LENGTH_SHORT).show();
+
 
     }
 }
