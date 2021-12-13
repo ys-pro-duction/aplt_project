@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -31,6 +32,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.ys_production.aveeplayerlatesttemplate.R;
 import com.ys_production.aveeplayerlatesttemplate.databinding.FragmentGalleryBinding;
 
@@ -38,6 +49,7 @@ public class GalleryFragment extends Fragment {
     ListView listView0;
     String[] items0;
     private TextView textView_file_0;
+    private InterstitialAd mInterstitialAd;
 
     private FragmentGalleryBinding binding;
 
@@ -49,6 +61,56 @@ public class GalleryFragment extends Fragment {
 
         listView0 = root.findViewById(R.id.listView);
         textView_file_0 = root.findViewById(R.id.kagadjkf);
+//        ================ad initialize==================
+        MobileAds.initialize(getContext(), new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                SharedPreferences sp = getContext().getSharedPreferences("adswitch", Context.MODE_PRIVATE);
+                String ads = String.valueOf(sp.getString("ADswitch","on"));
+                if (ads.equals("on")){
+                    loadAds2();
+                }
+            }
+        });
+//========================Banner_Ad===============================
+        SharedPreferences sp = getContext().getSharedPreferences("adswitch",Context.MODE_PRIVATE);
+        String ads = String.valueOf(sp.getString("ADswitch","on"));
+        if (ads.equals("on")){
+            AdView mAdView = root.findViewById(R.id.banner1);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+
+            mAdView.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    // Code to be executed when an ad finishes loading.
+                }
+
+                @Override
+                public void onAdFailedToLoad(LoadAdError adError) {
+                    // Code to be executed when an ad request fails.
+                }
+
+                @Override
+                public void onAdOpened() {
+                    // Code to be executed when an ad opens an overlay that
+                    // covers the screen.
+                }
+
+                @Override
+                public void onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                }
+
+                @Override
+                public void onAdClosed() {
+                    // Code to be executed when the user is about to return
+                    // to the app after tapping on an ad.
+                }
+            });
+        }
+
+
 
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             Handler handler = new Handler();
@@ -141,6 +203,50 @@ public class GalleryFragment extends Fragment {
             Toast.makeText(getContext(), "Please install Avee Player", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    //    ==================ad=============================
+    public void loadAds2(){
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(getContext(), "ca-app-pub-3940256099942544/1033173712"
+                , adRequest, new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        super.onAdLoaded(interstitialAd);
+                        mInterstitialAd = interstitialAd;
+                        showAd2();
+                        Log.i("Ad1", "AdLoaded");
+                    }
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        super.onAdFailedToLoad(loadAdError);
+                        Log.i("error load Ad", loadAdError.getMessage());
+                        mInterstitialAd = null;
+                    }
+                });
+
+
+    }
+
+    public void showAd2(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mInterstitialAd != null) {
+                    mInterstitialAd.show(getActivity());
+                    mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                        @Override
+                        public void onAdDismissedFullScreenContent() {
+                            // Called when fullscreen content is dismissed.
+                            Toast.makeText(getContext(), "ad closed", Toast.LENGTH_LONG);
+                        }
+                    });
+                }
+                else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
+                }
+            }
+        },1000);
     }
 
 

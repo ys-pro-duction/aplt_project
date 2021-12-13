@@ -1,7 +1,7 @@
 package com.ys_production.aveeplayerlatesttemplate;
 
 public class Template_data {
-    String imgurl,Dlink,Item_name,AdSwitch;
+    String imgurl,Dlink,Item_name,AdSwitch,Yt;
 
     public String getAdSwitch(){
         return AdSwitch;
@@ -17,5 +17,9 @@ public class Template_data {
 
     public String getItem_name() {
         return Item_name;
+    }
+
+    public String getYt(){
+        return Yt;
     }
 }

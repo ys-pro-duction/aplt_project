@@ -1,37 +1,27 @@
 package com.ys_production.aveeplayerlatesttemplate;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.FullScreenContentCallback;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.OnUserEarnedRewardListener;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.google.android.gms.ads.rewarded.RewardItem;
-import com.google.android.gms.ads.rewarded.RewardedAd;
-
 import android.Manifest;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.webkit.CookieManager;
-import android.webkit.URLUtil;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.downloader.Error;
@@ -42,17 +32,34 @@ import com.downloader.OnProgressListener;
 import com.downloader.OnStartOrResumeListener;
 import com.downloader.PRDownloader;
 import com.downloader.Progress;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.google.android.material.snackbar.Snackbar;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.io.File;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    private int diractory_check = 0;
+//    private int diractory_check = 0;
     private ConstraintLayout rootLayout;
     private RewardedAd mRewardedAd;
     private final String TAG = "MainActivity";
+    private String API_KEY = "AIzaSyCYsgWwGbsY9mzcDsubkWdYi7w0aKPWt9Q";
+    public String VIDEO_ID = null;
 
 
     @Override
@@ -71,21 +78,43 @@ public class MainActivity2 extends AppCompatActivity {
         rootLayout = findViewById(R.id.ma2);
         TextView tv = findViewById(R.id.textView4);
         PRDownloader.initialize(this);
+        VIDEO_ID = getIntent().getStringExtra("Yt");
 //        ==============Set Template Name =======================
         TextView textView2 = findViewById(R.id.textView2);
         String name = getIntent().getStringExtra("Name");
         textView2.setText(name);
-//===========================Rewarded ad=============================================================
+
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Downloading.....");
+
+//===========================Rewarded ad========================================
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
-                Toast.makeText(MainActivity2.this, "Initialize DoNe", Toast.LENGTH_SHORT).show();
-                loadRad(tv,name);
+//                Toast.makeText(MainActivity2.this, "Initialize DoNe", Toast.LENGTH_SHORT).show();
+
             }
         });
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            showRad(tv,name);
+            SharedPreferences sp = getSharedPreferences("adswitch", Context.MODE_PRIVATE);
+            String ads = String.valueOf(sp.getString("ADswitch","on"));
+            Button adownload = findViewById(R.id.again_download);
+            banner2(ads);
+            adownload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    progressDialog.show();
+                    if (ads.equals("on")){
+                        loadRad(tv,name,progressDialog);
+                    }
+                    else {
+                        startDownload(tv,name,progressDialog);
+                    }
+                }
+            });
+
+
         }
         else {
             Intent i = new Intent(this, Navigation_MainActivty.class);
@@ -95,9 +124,25 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
+
+//        =====================Youtube load==============================
+        YouTubePlayerView youTubePlayerView = (YouTubePlayerView) findViewById(R.id.ytView);
+        getLifecycle().addObserver(youTubePlayerView);
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+            @Override
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+//                super.onReady(youTubePlayer);
+                if (VIDEO_ID !=  null){
+                    youTubePlayer.loadVideo(VIDEO_ID,0);
+                }else {
+                    Toast.makeText(MainActivity2.this,"preview not availeble",Toast.LENGTH_SHORT);
+                }
+            }
+        });
+
 //========================Template_prewview_image===================================================
         ImageView imageView2 = findViewById(R.id.imageView2);
-        Glide.with(this).load(getIntent().getStringExtra("ImageUrl")).into(imageView2);
+            Glide.with(this).load(getIntent().getStringExtra("ImageUrl")).placeholder(R.drawable.ic_baseline_home_24).into(imageView2);
 
 
 //        ==============Start Download====================
@@ -128,11 +173,8 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
-
-
-
         }
-        public void showRad(TextView tv, String name){
+        public void showRad(TextView tv, String name,ProgressDialog progressDialog){
             if (mRewardedAd != null) {
                 Activity activityContext = MainActivity2.this;
                 mRewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
@@ -142,7 +184,7 @@ public class MainActivity2 extends AppCompatActivity {
                         Log.d(TAG, "The user earned the reward.");
                         int rewardAmount = rewardItem.getAmount();
                         String rewardType = rewardItem.getType();
-                        Actionad(tv,name);
+                        Actionad(tv,name,progressDialog);
                     }
                 });
             } else {
@@ -150,12 +192,12 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
 
-        public void Actionad(TextView tv, String name){
+        public void Actionad(TextView tv, String name,ProgressDialog progressDialog){
             mRewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                 @Override
                 public void onAdShowedFullScreenContent() {
                     // Called when ad is shown.
-                    startDownload(tv,name);
+                    startDownload(tv,name,progressDialog);
                     Log.d(TAG, "Ad was shown.");
                     Toast.makeText(MainActivity2.this, "ad showing", Toast.LENGTH_SHORT).show();
                 }
@@ -163,7 +205,7 @@ public class MainActivity2 extends AppCompatActivity {
                 @Override
                 public void onAdFailedToShowFullScreenContent(AdError adError) {
                     // Called when ad fails to show.
-                    startDownload(tv,name);
+                    startDownload(tv,name,progressDialog);
                     Log.d(TAG, "Ad failed to show.");
                 }
 
@@ -173,20 +215,20 @@ public class MainActivity2 extends AppCompatActivity {
                     // Set the ad reference to null so you don't show the ad a second time.
                     Log.d(TAG, "Ad was dismissed.");
 //                    mRewardedAd = null;
-                    startDownload(tv,name);
+                    startDownload(tv,name,progressDialog);
                 }
 
             });
         }
 
-        public void loadRad(TextView tv, String name){
+        public void loadRad(TextView tv, String name,ProgressDialog progressDialog){
             AdRequest adRequest = new AdRequest.Builder().build();
             RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
                     adRequest, new RewardedAdLoadCallback() {
                         @Override
                         public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                             // Handle the error.
-                            startDownload(tv, name);
+                            startDownload(tv, name,progressDialog);
                             Log.d(TAG, loadAdError.getMessage());
                             mRewardedAd = null;
                         }
@@ -194,13 +236,13 @@ public class MainActivity2 extends AppCompatActivity {
                         @Override
                         public void onAdLoaded(@NonNull RewardedAd rewardedAd) {
                             mRewardedAd = rewardedAd;
-                            showRad(tv,name);
+                            showRad(tv,name,progressDialog);
                             Log.d(TAG, "Ad was loaded.");
                         }
                     });
         }
 
-        public void startDownload(TextView tv, String name){
+        public void startDownload(TextView tv, String name,ProgressDialog progressDialog){
             String url = String.valueOf(Uri.parse(getIntent().getStringExtra("DownloadUrl")));
             File dirPath = new File(String.valueOf(Environment.getExternalStoragePublicDirectory("Download")));
             //        String dirPath1 = String.valueOf(dirPath);
@@ -237,6 +279,7 @@ public class MainActivity2 extends AppCompatActivity {
                         public void onProgress(Progress progress) {
                             long par = progress.currentBytes * 100 / progress.totalBytes;
                             pd.setMessage("Downloading.. : " + par + "%");
+                            progressDialog.dismiss();
                             pd.show();
 
 //                            onBackPressed(pd.cancel(););
@@ -261,5 +304,41 @@ public class MainActivity2 extends AppCompatActivity {
 
         }
 
+    //========================Banner_Ad===============================
+    public void banner2(String ads) {
+        if (ads.equals("on")) {
+            AdView mAdView = findViewById(R.id.banner2);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
 
+            mAdView.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    // Code to be executed when an ad finishes loading.
+                }
+
+                @Override
+                public void onAdFailedToLoad(LoadAdError adError) {
+                    // Code to be executed when an ad request fails.
+                }
+
+                @Override
+                public void onAdOpened() {
+                    // Code to be executed when an ad opens an overlay that
+                    // covers the screen.
+                }
+
+                @Override
+                public void onAdClicked() {
+                    // Code to be executed when the user clicks on an ad.
+                }
+
+                @Override
+                public void onAdClosed() {
+                    // Code to be executed when the user is about to return
+                    // to the app after tapping on an ad.
+                }
+            });
+        }
     }
+}

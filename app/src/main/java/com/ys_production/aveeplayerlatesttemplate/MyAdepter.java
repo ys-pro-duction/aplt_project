@@ -1,34 +1,22 @@
 package com.ys_production.aveeplayerlatesttemplate;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.OnUserEarnedRewardListener;
-import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
 
 public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
     Context context;
@@ -61,6 +49,7 @@ public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
         SharedPreferences sp = context.getSharedPreferences("adswitch",Context.MODE_PRIVATE);
         SharedPreferences.Editor ed = sp.edit();
         ed.putString("ADswitch",ad).apply();
+        String yt = item.getYt();
 
 
         holder.Durl.findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
@@ -72,6 +61,7 @@ public class MyAdepter extends RecyclerView.Adapter<MyAdepter.MyViewHolder> {
                 intent.putExtra("ImageUrl",item.getImgurl());
                 intent.putExtra("Name",item.getItem_name());
                 intent.putExtra("DownloadUrl",item.getDlink());
+                intent.putExtra("Yt",yt);
                 context.startActivity(intent);
             }
         });

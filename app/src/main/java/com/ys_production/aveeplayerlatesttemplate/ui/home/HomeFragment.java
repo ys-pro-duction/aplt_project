@@ -32,7 +32,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ys_production.aveeplayerlatesttemplate.MyAdepter;
-import com.ys_production.aveeplayerlatesttemplate.Navigation_MainActivty;
 import com.ys_production.aveeplayerlatesttemplate.R;
 import com.ys_production.aveeplayerlatesttemplate.Template_data;
 import com.ys_production.aveeplayerlatesttemplate.databinding.FragmentHomeBinding;
@@ -67,6 +66,11 @@ public class HomeFragment extends Fragment {
             @Override
             public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
                 Toast.makeText(root.getContext(), "Initialize DoNe", Toast.LENGTH_SHORT).show();
+                SharedPreferences sp = getContext().getSharedPreferences("adswitch", Context.MODE_PRIVATE);
+                String ads = String.valueOf(sp.getString("ADswitch","on"));
+                if (ads.equals("on")){
+                    loadAds();
+                }
             }
         });
 //        AdRequest adRequest = new AdRequest.Builder().build();
@@ -200,6 +204,7 @@ public void loadAds(){
                 public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
                     super.onAdLoaded(interstitialAd);
                     mInterstitialAd = interstitialAd;
+                    showAd();
                     Log.i("Ad1", "AdLoaded");
                 }
                 @Override
@@ -224,34 +229,33 @@ public void loadAds(){
                         public void onAdDismissedFullScreenContent() {
                             // Called when fullscreen content is dismissed.
                             Toast.makeText(getContext(), "ad closed", Toast.LENGTH_LONG);
-                            loadAds();
                         }
                     });
-                } else {
+                }
+                else {
                     Log.d("TAG", "The interstitial ad wasn't ready yet.");
                 }
             }
         },1000);
     }
     public void onFabclick(FloatingActionButton fab){
-        SharedPreferences sp = getContext().getSharedPreferences("adswitch", Context.MODE_PRIVATE);
-        String ads = String.valueOf(sp.getString("ADswitch","on"));
+
         if(fabp==0){
             goTodownloads(fab);
-            Toast.makeText(getContext(), "ads "+ads, Toast.LENGTH_SHORT).show();
-            if (ads.equals("on")){
-                loadAds();
-                showAd();
-                Toast.makeText(getContext(), "try ad", Toast.LENGTH_SHORT).show();
-            }
+//            Toast.makeText(getContext(), "ads "+ads, Toast.LENGTH_SHORT).show();
+//            if (ads.equals("on")){
+//                loadAds();
+//                showAd();
+//                Toast.makeText(getContext(), "try ad", Toast.LENGTH_SHORT).show();
+//            }
         }
         else {
             goTohome(fab);
-            if (ads.equals("on")){
-                loadAds();
-                showAd();
-                Toast.makeText(getContext(), "try ad", Toast.LENGTH_SHORT).show();
-            }
+//            if (ads.equals("on")){
+//                loadAds();
+//                showAd();
+//                Toast.makeText(getContext(), "try ad", Toast.LENGTH_SHORT).show();
+//            }
         }
 
 

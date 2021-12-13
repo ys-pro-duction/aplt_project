@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ma2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/ma2"
+    android:background="@color/purple_500"
     tools:context=".MainActivity2">
 
     <ScrollView
@@ -20,48 +21,51 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="6dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|top"
-                android:layout_margin="15dp"
-                android:text="This Is A sample One line Tittle"
-                android:textSize="20sp"
+                android:layout_margin="5dp"
+                android:text=""
+                android:textColor="@color/teal_200"
+                android:textSize="25sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/cardView1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/cardView1" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView1"
-                android:layout_width="300dp"
-                android:layout_height="400dp"
-                android:layout_marginBottom="20dp"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="3:4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp"
+                app:cardElevation="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2">
+                app:layout_constraintTop_toTopOf="parent">
 
-
-                <ImageView
-                    android:id="@+id/imageView2"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"
-                    android:background="#00FFFFFF"
-                    app:srcCompat="@drawable/barline_loading_images" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="2:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@android:drawable/progress_indeterminate_horizontal"
+                        tools:ignore="ContentDescription" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
                     android:id="@+id/textView4"
@@ -69,27 +73,96 @@
                     android:layout_height="wrap_content"
                     android:shadowColor="#FFFFFF"
                     android:shadowRadius="5"
-                    android:text="TextView"
-                    android:textSize="20sp" />
+                    android:text=""
+                    android:textSize="20sp"
+                    android:visibility="invisible" />
 
             </androidx.cardview.widget.CardView>
-<!--            <soup.neumorphism.NeumorphCardView-->
+
+            <LinearLayout
+                android:id="@+id/baseline1_"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#8002D9C3"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+            <LinearLayout
+                android:id="@+id/baseline2_"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#8002D9C3"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView1" />
+
+            <Button
+                android:id="@+id/again_download"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="download"
+                app:backgroundTint="#1F998D"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/baseline1_" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:text="Preview"
+                android:textColor="@color/teal_200"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/again_download" />
+
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/ytView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:autoPlay="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/banner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="24dp"
+                app:adSize="SMART_BANNER"
+                app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ytView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-<!--    <androidx.constraintlayout.widget.Guideline-->
-<!--        android:id="@+id/guideline2"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintGuide_percent="0.1"/>-->
+    <!--    <androidx.constraintlayout.widget.Guideline-->
+    <!--        android:id="@+id/guideline2"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintGuide_percent="0.1"/>-->
 
-<!--    <androidx.constraintlayout.widget.Guideline-->
-<!--        android:id="@+id/guideline4"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintGuide_percent="0.9"/>-->
+    <!--    <androidx.constraintlayout.widget.Guideline-->
+    <!--        android:id="@+id/guideline4"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintGuide_percent="0.9"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
