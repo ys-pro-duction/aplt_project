@@ -35,6 +35,7 @@ import com.downloader.Progress;
 import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
@@ -86,6 +87,9 @@ public class MainActivity2 extends AppCompatActivity {
 
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Downloading.....");
+        SharedPreferences sharedPreferences = getSharedPreferences("adunit",MODE_PRIVATE);
+        String ma2r = sharedPreferences.getString("ma2r",null);
+        String ma2_b = sharedPreferences.getString("ma2_b",null);
 
 //===========================Rewarded ad========================================
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
@@ -100,13 +104,13 @@ public class MainActivity2 extends AppCompatActivity {
             SharedPreferences sp = getSharedPreferences("adswitch", Context.MODE_PRIVATE);
             String ads = String.valueOf(sp.getString("ADswitch","on"));
             Button adownload = findViewById(R.id.again_download);
-            banner2(ads);
+            banner2(ads,ma2_b);
             adownload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     progressDialog.show();
                     if (ads.equals("on")){
-                        loadRad(tv,name,progressDialog);
+                        loadRad(tv,name,progressDialog,ma2r);
                     }
                     else {
                         startDownload(tv,name,progressDialog);
@@ -135,7 +139,7 @@ public class MainActivity2 extends AppCompatActivity {
                 if (VIDEO_ID !=  null){
                     youTubePlayer.loadVideo(VIDEO_ID,0);
                 }else {
-                    Toast.makeText(MainActivity2.this,"preview not availeble",Toast.LENGTH_SHORT);
+                    Toast.makeText(MainActivity2.this,"preview not availeble",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -199,7 +203,7 @@ public class MainActivity2 extends AppCompatActivity {
                     // Called when ad is shown.
                     startDownload(tv,name,progressDialog);
                     Log.d(TAG, "Ad was shown.");
-                    Toast.makeText(MainActivity2.this, "ad showing", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity2.this, "ad showing", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -221,9 +225,12 @@ public class MainActivity2 extends AppCompatActivity {
             });
         }
 
-        public void loadRad(TextView tv, String name,ProgressDialog progressDialog){
+        public void loadRad(TextView tv, String name,ProgressDialog progressDialog,String ma2r){
+        if (ma2r == null){
+            Toast.makeText(MainActivity2.this, "null", Toast.LENGTH_SHORT).show();
+        }
             AdRequest adRequest = new AdRequest.Builder().build();
-            RewardedAd.load(this, "ca-app-pub-3940256099942544/5224354917",
+            RewardedAd.load(this, ma2r,
                     adRequest, new RewardedAdLoadCallback() {
                         @Override
                         public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
@@ -258,7 +265,7 @@ public class MainActivity2 extends AppCompatActivity {
                     .setOnStartOrResumeListener(new OnStartOrResumeListener() {
                         @Override
                         public void onStartOrResume() {
-                            Toast.makeText(MainActivity2.this, "start Dwnld", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(MainActivity2.this, "start Dwnld", Toast.LENGTH_LONG).show();
 
                         }
                     })
@@ -305,9 +312,12 @@ public class MainActivity2 extends AppCompatActivity {
         }
 
     //========================Banner_Ad===============================
-    public void banner2(String ads) {
+    public void banner2(String ads,String ma2_b) {
         if (ads.equals("on")) {
             AdView mAdView = findViewById(R.id.banner2);
+
+//            mAdView.setAdUnitId(ma2_b);
+//            mAdView.setAdSize(AdSize.SMART_BANNER);
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
 

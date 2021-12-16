@@ -34,6 +34,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
@@ -61,22 +62,26 @@ public class GalleryFragment extends Fragment {
 
         listView0 = root.findViewById(R.id.listView);
         textView_file_0 = root.findViewById(R.id.kagadjkf);
+
+        SharedPreferences sp = getContext().getSharedPreferences("adswitch", Context.MODE_PRIVATE);
+        String ads = String.valueOf(sp.getString("ADswitch","on"));
+        SharedPreferences sp2 = getContext().getSharedPreferences("adunit", Context.MODE_PRIVATE);
+        String gaf_b = String.valueOf(sp2.getString("gaf_b",null));
+        String gaf_i = String.valueOf(sp2.getString("gaf_i",null));
 //        ================ad initialize==================
         MobileAds.initialize(getContext(), new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
-                SharedPreferences sp = getContext().getSharedPreferences("adswitch", Context.MODE_PRIVATE);
-                String ads = String.valueOf(sp.getString("ADswitch","on"));
                 if (ads.equals("on")){
-                    loadAds2();
+                    loadAds2(gaf_i);
                 }
             }
         });
 //========================Banner_Ad===============================
-        SharedPreferences sp = getContext().getSharedPreferences("adswitch",Context.MODE_PRIVATE);
-        String ads = String.valueOf(sp.getString("ADswitch","on"));
         if (ads.equals("on")){
             AdView mAdView = root.findViewById(R.id.banner1);
+//            mAdView.setAdUnitId(gaf_b);
+//            mAdView.setAdSize(AdSize.SMART_BANNER);
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
 
@@ -206,9 +211,9 @@ public class GalleryFragment extends Fragment {
     }
 
     //    ==================ad=============================
-    public void loadAds2(){
+    public void loadAds2(String gaf_i){
         AdRequest adRequest = new AdRequest.Builder().build();
-        InterstitialAd.load(getContext(), "ca-app-pub-3940256099942544/1033173712"
+        InterstitialAd.load(getContext(), gaf_i
                 , adRequest, new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
@@ -246,7 +251,7 @@ public class GalleryFragment extends Fragment {
                     Log.d("TAG", "The interstitial ad wasn't ready yet.");
                 }
             }
-        },1000);
+        },1);
     }
 
 

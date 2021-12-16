@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment {
     MyAdepter myAdepter;
     ArrayList<Template_data> list;
     static int fabp = 0;
+    public int la = 0;
     private InterstitialAd mInterstitialAd;
 
 
@@ -61,15 +62,19 @@ public class HomeFragment extends Fragment {
 
 
 //        ==================AdMob ad======================================================
-
+        la++;
         MobileAds.initialize(root.getContext(), new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
                 Toast.makeText(root.getContext(), "Initialize DoNe", Toast.LENGTH_SHORT).show();
                 SharedPreferences sp = getContext().getSharedPreferences("adswitch", Context.MODE_PRIVATE);
                 String ads = String.valueOf(sp.getString("ADswitch","on"));
+                SharedPreferences sp2 = getContext().getSharedPreferences("adunit", Context.MODE_PRIVATE);
+                String hof_i = String.valueOf(sp2.getString("hof_i",null));
                 if (ads.equals("on")){
-                    loadAds();
+                    if(la <= 2){
+                        loadAds(hof_i);
+                    }
                 }
             }
         });
@@ -130,7 +135,7 @@ public class HomeFragment extends Fragment {
 
 
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -196,9 +201,9 @@ public class HomeFragment extends Fragment {
         fabp++;
     }
 //    ==================ad=============================
-public void loadAds(){
+public void loadAds(String hof_i){
     AdRequest adRequest = new AdRequest.Builder().build();
-    InterstitialAd.load(getContext(), "ca-app-pub-3940256099942544/1033173712"
+    InterstitialAd.load(getContext(), hof_i
             , adRequest, new InterstitialAdLoadCallback() {
                 @Override
                 public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
