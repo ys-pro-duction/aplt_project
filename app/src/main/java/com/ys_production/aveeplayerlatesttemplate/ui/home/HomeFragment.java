@@ -72,9 +72,7 @@ public class HomeFragment extends Fragment {
                 SharedPreferences sp2 = getContext().getSharedPreferences("adunit", Context.MODE_PRIVATE);
                 String hof_i = String.valueOf(sp2.getString("hof_i",null));
                 if (ads.equals("on")){
-                    if(la <= 2){
-                        loadAds(hof_i);
-                    }
+                    loadAds(hof_i);
                 }
             }
         });
